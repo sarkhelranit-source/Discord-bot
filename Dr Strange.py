@@ -5,7 +5,6 @@ from nextcord.ui import Button, View
 import random
 import os
 import aiohttp
-from utils import generate_puzzle_embed
 from webserver import keep_alive
 
 bot = commands.Bot(command_prefix="$")
@@ -326,13 +325,6 @@ async def update(ctx):
                      icon_url="https://tenor.com/view/doctor-strange-ready-lets-do-this-gif-25043482.gif")
 
     await ctx.send(embed=embed)
-
-
-@bot.command()
-async def play(ctx, interaction):
-    embed = generate_puzzle_embed()
-
-    await interaction.send(embed=embed)
 
 
 keep_alive()

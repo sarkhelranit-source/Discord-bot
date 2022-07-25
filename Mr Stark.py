@@ -359,4 +359,4 @@ async def p(ctx, url: str):
     voice.play(nextcord.FFmpegAudio("song.mp3"))
 
 keep_alive()
-bot.run("OTU4MzYzMTM0ODc0MjQzMTI2.YkMPOA.7PdiHwYHM8NBn3D9E1ugbOyNIXw")
+bot.run(os.environ.get("Tony secret"))
