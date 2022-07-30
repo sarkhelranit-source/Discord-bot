@@ -3,6 +3,7 @@ from nextcord.ext import commands
 from nextcord.ui import Button, View
 import os
 import asyncio
+import io
 import oneliners
 import random
 import datetime
@@ -18,7 +19,58 @@ intents.typing = True
 intents.members = True
 intents.guilds = True
 
+
 bot = commands.Bot(command_prefix=".", case_insensitive=True, intents=intents)
+
+
+@bot.command()
+async def amgsus(ctx, member: nextcord.Member):
+    lst = ["true", "false"]
+    url = f"https://some-random-api.ml/premium/amongus?avatar={member.avatar.url}&key=5rQWsDuewFB9s6HvXMU6USvEGthn2rzmBdt28KOB6dnOY9s9DUzDqftgijnGbGgt&username={member.name}&imposter={random.choice(lst)}"
+      
+    async with request("GET", url) as response:
+        amgs = io.BytesIO(await response.read())
+        file = nextcord.File(amgs, "amgs.gif")
+        await ctx.reply(file=file)
+
+
+@bot.command()
+async def horny(ctx, *, member: nextcord.Member):
+    url = f"https://some-random-api.ml/canvas/horny?avatar={member.avatar.url}"
+    if member == None:
+        await ctx.send("Please mention someone")
+    elif member.name == "RASODA":
+        await ctx.send("RASODA is not horny at all")
+    else:
+        async with request("GET", url) as response:
+            hor = io.BytesIO(await response.read())
+            file = nextcord.File(hor, "horny.png")
+            emb = nextcord.Embed(
+                title=f"Horny License just for {member.name}", color=member.color)
+            emb.set_image(url="attachment://horny.png")
+            emb.set_author(name="Horny", icon_url="https://discord.com/channels/943127717157675009/998642909345755326/1002977602614595594")
+            # emb.set_thumbnail(url=bot.user.avatar.url)
+            emb.set_footer(text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+            await ctx.reply(embed=emb, file=file)
+
+
+@bot.command()
+async def simp(ctx, *, member: nextcord.Member):
+    url = f"https://some-random-api.ml/canvas/simpcard?avatar={member.avatar.url}"
+    if member == None:
+        await ctx.send("Please mention someone")
+    elif member.name == "RASODA":
+        await ctx.send("RASODA is not a simp")
+    else:
+        async with request("GET", url) as response:
+            smp = io.BytesIO(await response.read())
+            file = nextcord.File(smp, "simp.png")
+            emb = nextcord.Embed(
+                title=f"Simpcard for {member.name}", color=member.color)
+            emb.set_image(url="attachment://simp.png")
+            emb.set_footer(text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+            await ctx.reply(embed=emb, file=file)
+          
 
 
 @bot.command()
@@ -37,7 +89,7 @@ async def info(ctx, *, member: nextcord.Member):
         role.mention for role in member.roles))
     emb.add_field(
         name="Status", value=f"Mobile: {member.mobile_status}\nDesktop: {member.desktop_status}\nWeb: {member.web_status}")
-    emb.add_field(name="Activity", value=member.activity)
+    emb.add_field(name="Activity", value=member.system)
     emb.add_field(name="Top Role", value=member.top_role.mention)
     emb.set_thumbnail(url=member.avatar.url)
     emb.set_footer(
