@@ -24,14 +24,43 @@ bot = commands.Bot(command_prefix=".", case_insensitive=True, intents=intents)
 
 
 @bot.command()
+async def trig(ctx, *, member: nextcord.Member):
+    url = f'https://some-random-api.ml/canvas/triggered?avatar={member.avatar.url}'
+
+    async with request("GET", url) as response:
+        triggf = io.BytesIO(await response.read())
+        file = nextcord.File(triggf, "trigger.gif")
+        emb = nextcord.Embed(
+            title=f"Trigerred {member.name}", color=member.color)
+        emb.set_image(url="attachment://trigger.gif")
+        emb.set_footer(
+            text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+        await ctx.reply(embed=emb, file=file)
+
+
+@bot.command()
 async def amgsus(ctx, member: nextcord.Member):
     lst = ["true", "false"]
+    if member.name == "":
+        random.choice(lst) == "true"
+
     url = f"https://some-random-api.ml/premium/amongus?avatar={member.avatar.url}&key=5rQWsDuewFB9s6HvXMU6USvEGthn2rzmBdt28KOB6dnOY9s9DUzDqftgijnGbGgt&username={member.name}&imposter={random.choice(lst)}"
-      
+
+    if random.choice(lst) == "true":
+        tit = "We got the Imposter"
+    elif random.choice(lst) == "false":
+        tit = "Sadly we kicked the innocent one"
+
     async with request("GET", url) as response:
         amgs = io.BytesIO(await response.read())
         file = nextcord.File(amgs, "amgs.gif")
-        await ctx.reply(file=file)
+        emb = nextcord.Embed(title=tit, color=member.color)
+        emb.set_image(url="attachment://amgs.gif")
+        emb.set_author(
+            name="Among Sus", icon_url="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ad09b7110700277.5ff3fbebc5f27.gif")
+        emb.set_footer(
+            text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+        await ctx.reply(embed=emb, file=file)
 
 
 @bot.command()
@@ -48,9 +77,11 @@ async def horny(ctx, *, member: nextcord.Member):
             emb = nextcord.Embed(
                 title=f"Horny License just for {member.name}", color=member.color)
             emb.set_image(url="attachment://horny.png")
-            emb.set_author(name="Horny", icon_url="https://discord.com/channels/943127717157675009/998642909345755326/1002977602614595594")
+            emb.set_author(
+                name="Horny", icon_url="https://discord.com/channels/943127717157675009/998642909345755326/1002977602614595594")
             # emb.set_thumbnail(url=bot.user.avatar.url)
-            emb.set_footer(text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+            emb.set_footer(
+                text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
             await ctx.reply(embed=emb, file=file)
 
 
@@ -68,9 +99,9 @@ async def simp(ctx, *, member: nextcord.Member):
             emb = nextcord.Embed(
                 title=f"Simpcard for {member.name}", color=member.color)
             emb.set_image(url="attachment://simp.png")
-            emb.set_footer(text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+            emb.set_footer(
+                text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
             await ctx.reply(embed=emb, file=file)
-          
 
 
 @bot.command()
