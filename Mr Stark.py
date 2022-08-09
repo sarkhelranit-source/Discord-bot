@@ -25,9 +25,51 @@ bot = commands.Bot(command_prefix=".", case_insensitive=True, intents=intents)
 
 
 @bot.command()
-async def join(ctx):
-  channel = ctx.author.voice.channel
-  await channel.connect()
+async def wanted(ctx, member: nextcord.Member):
+    url = f"https://api.popcat.xyz/wanted?image={member.avatar.url}"
+
+    async with request("GET", url) as response:
+        imgdata = io.BytesIO(await response.read())
+        welcimg = nextcord.File(imgdata, "imgdata.png")
+
+        if member.name == "RASODA":
+          await ctx.send("https://c.tenor.com/HWBMmc8g6p4AAAAM/fuck-fuck-you.gif")
+        else:
+          await ctx.send(file=welcimg)
+
+
+@bot.command()
+async def pat(ctx, member: nextcord.Member):
+    url = f"https://api.popcat.xyz/pet?image={member.avatar.url}"
+
+    async with request("GET", url) as response:
+        imgdata = io.BytesIO(await response.read())
+        welcimg = nextcord.File(imgdata, "imgdata.gif")
+
+        if member.name == "RASODA":
+          await ctx.send("https://c.tenor.com/-d8ZvWiLXWwAAAAM/abe-hatt-abe-hat.gif")
+        else:
+          await ctx.reply(file=welcimg)
+
+
+@bot.command()
+async def ship(ctx, member1:nextcord.Member, member2:nextcord.Member):
+  url = f"https://api.popcat.xyz/ship?user1={member1.avatar.url}&user2={member2.avatar.url}"
+  
+  async with request("GET", url) as response:
+        imgdata = io.BytesIO(await response.read())
+        welcimg = nextcord.File(imgdata, "imgdata.png")
+
+        if (member1.name == "Wanda" and member2.name == "RASODA") or (member1.name == "RASODA" and member2.name == "Wanda"):
+          await ctx.reply(file=welcimg)
+        elif member1.name == "RASODA" or member2.name == "RASODA":
+          await ctx.send("https://c.tenor.com/2QICKZczOQYAAAAM/3idiots-chatur-ramalingam.gif")
+        elif member1.name == "Wanda" or member2.name == "Wanda":
+          await ctx.send("https://c.tenor.com/rCwUWeWaDCgAAAAM/lund-lele.gif")
+        elif member1.name == bot.user.name or member2.name == bot.user.name:
+          await ctx.send("https://c.tenor.com/qYQWj6tJV_kAAAAM/zakir-zakirkhan.gif")
+        else:
+          await ctx.reply(file=welcimg)
 
 
 @bot.command()
