@@ -33,9 +33,9 @@ async def wanted(ctx, member: nextcord.Member):
         welcimg = nextcord.File(imgdata, "imgdata.png")
 
         if member.name == "RASODA":
-          await ctx.send("https://c.tenor.com/HWBMmc8g6p4AAAAM/fuck-fuck-you.gif")
+            await ctx.send("https://c.tenor.com/HWBMmc8g6p4AAAAM/fuck-fuck-you.gif")
         else:
-          await ctx.send(file=welcimg)
+            await ctx.send(file=welcimg)
 
 
 @bot.command()
@@ -47,89 +47,96 @@ async def pat(ctx, member: nextcord.Member):
         welcimg = nextcord.File(imgdata, "imgdata.gif")
 
         if member.name == "RASODA":
-          await ctx.send("https://c.tenor.com/-d8ZvWiLXWwAAAAM/abe-hatt-abe-hat.gif")
+            await ctx.send("https://c.tenor.com/-d8ZvWiLXWwAAAAM/abe-hatt-abe-hat.gif")
         else:
-          await ctx.reply(file=welcimg)
+            await ctx.reply(file=welcimg)
 
 
 @bot.command()
-async def ship(ctx, member1:nextcord.Member, member2:nextcord.Member):
-  url = f"https://api.popcat.xyz/ship?user1={member1.avatar.url}&user2={member2.avatar.url}"
-  
-  async with request("GET", url) as response:
+async def ship(ctx, member1: nextcord.Member, member2: nextcord.Member):
+    url = f"https://api.popcat.xyz/ship?user1={member1.avatar.url}&user2={member2.avatar.url}"
+
+    async with request("GET", url) as response:
         imgdata = io.BytesIO(await response.read())
         welcimg = nextcord.File(imgdata, "imgdata.png")
 
         if (member1.name == "Wanda" and member2.name == "RASODA") or (member1.name == "RASODA" and member2.name == "Wanda"):
-          await ctx.reply(file=welcimg)
+            await ctx.reply(file=welcimg)
         elif member1.name == "RASODA" or member2.name == "RASODA":
-          await ctx.send("https://c.tenor.com/2QICKZczOQYAAAAM/3idiots-chatur-ramalingam.gif")
+            await ctx.send("https://c.tenor.com/2QICKZczOQYAAAAM/3idiots-chatur-ramalingam.gif")
         elif member1.name == "Wanda" or member2.name == "Wanda":
-          await ctx.send("https://c.tenor.com/rCwUWeWaDCgAAAAM/lund-lele.gif")
+            await ctx.send("https://c.tenor.com/rCwUWeWaDCgAAAAM/lund-lele.gif")
         elif member1.name == bot.user.name or member2.name == bot.user.name:
-          await ctx.send("https://c.tenor.com/qYQWj6tJV_kAAAAM/zakir-zakirkhan.gif")
+            await ctx.send("https://c.tenor.com/qYQWj6tJV_kAAAAM/zakir-zakirkhan.gif")
         else:
-          await ctx.reply(file=welcimg)
+            await ctx.reply(file=welcimg)
 
 
 @bot.command()
 async def dog(ctx):
-  url = "https://some-random-api.ml/facts/dog"
+    url = "https://some-random-api.ml/facts/dog"
 
-  async with request("GET", url) as response:
-    data = await response.json()
-    emb = nextcord.Embed(title="Dog Facts", description=data['fact'], color=nextcord.Color.random())
-    emb.timestamp = datetime.datetime.now()
-    emb.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
-    emb.set_author(name="Developer: Ranit Sarkhel",
-                   icon_url="https://scontent.fccu2-4.fna.fbcdn.net/v/t1.6435-9/150911728_416405209458998_2740905449298016969_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=7XgZxKyPF0cAX8beQBu&_nc_ht=scontent.fccu2-4.fna&oh=00_AT-vnEGefmm-5_D8lypwIP4ZQSA1Doc4uwj7AyS-cJMohQ&oe=62FAD3C8")
-    emb.set_thumbnail(url="https://i.pinimg.com/originals/5f/05/2b/5f052b5b7375c79ad256aa65c55fece0.gif")
-    await ctx.send(embed=emb)
+    async with request("GET", url) as response:
+        data = await response.json()
+        emb = nextcord.Embed(
+            title="Dog Facts", description=data['fact'], color=nextcord.Color.random())
+        emb.timestamp = datetime.datetime.now()
+        emb.set_footer(
+            text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+        emb.set_author(name="Developer: Ranit Sarkhel",
+                       icon_url="https://scontent.fccu2-4.fna.fbcdn.net/v/t1.6435-9/150911728_416405209458998_2740905449298016969_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=7XgZxKyPF0cAX8beQBu&_nc_ht=scontent.fccu2-4.fna&oh=00_AT-vnEGefmm-5_D8lypwIP4ZQSA1Doc4uwj7AyS-cJMohQ&oe=62FAD3C8")
+        emb.set_thumbnail(
+            url="https://i.pinimg.com/originals/5f/05/2b/5f052b5b7375c79ad256aa65c55fece0.gif")
+        await ctx.send(embed=emb)
 
 
 @bot.command()
 async def cat(ctx):
-  url = "https://some-random-api.ml/facts/cat"
+    url = "https://some-random-api.ml/facts/cat"
 
-  async with request("GET", url) as response:
-    data = await response.json()
-    emb = nextcord.Embed(title="Cat Facts", description=data['fact'], color=nextcord.Color.random())
-    emb.timestamp = datetime.datetime.now()
-    emb.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
-    emb.set_author(name="Developer: Ranit Sarkhel",
-                   icon_url="https://scontent.fccu2-4.fna.fbcdn.net/v/t1.6435-9/150911728_416405209458998_2740905449298016969_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=7XgZxKyPF0cAX8beQBu&_nc_ht=scontent.fccu2-4.fna&oh=00_AT-vnEGefmm-5_D8lypwIP4ZQSA1Doc4uwj7AyS-cJMohQ&oe=62FAD3C8")
-    emb.set_thumbnail(url="https://c.tenor.com/NFjEeHbk-zwAAAAC/cat.gif")
-    await ctx.send(embed=emb)
-    
-  
+    async with request("GET", url) as response:
+        data = await response.json()
+        emb = nextcord.Embed(
+            title="Cat Facts", description=data['fact'], color=nextcord.Color.random())
+        emb.timestamp = datetime.datetime.now()
+        emb.set_footer(
+            text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+        emb.set_author(name="Developer: Ranit Sarkhel",
+                       icon_url="https://scontent.fccu2-4.fna.fbcdn.net/v/t1.6435-9/150911728_416405209458998_2740905449298016969_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=7XgZxKyPF0cAX8beQBu&_nc_ht=scontent.fccu2-4.fna&oh=00_AT-vnEGefmm-5_D8lypwIP4ZQSA1Doc4uwj7AyS-cJMohQ&oe=62FAD3C8")
+        emb.set_thumbnail(url="https://c.tenor.com/NFjEeHbk-zwAAAAC/cat.gif")
+        await ctx.send(embed=emb)
+
 
 @bot.command()
 async def pwd(ctx, message):
-  num = int(message)
-  lst = string.printable
+    num = int(message)
+    lst = string.printable
 
-  passwd = []
-  passwd.extend(list(lst))
-  random.shuffle(passwd)
+    passwd = []
+    passwd.extend(list(lst))
+    random.shuffle(passwd)
 
-  emb = nextcord.Embed(title="Password", description=f"Your {num} character password is:\n `{''.join(passwd[0:(num)])}`", color=ctx.author.color)
-  emb.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
-  emb.timestamp
-  emb.timestamp = datetime.datetime.now()
-  await ctx.author.send(embed=emb)
-
+    emb = nextcord.Embed(
+        title="Password", description=f"Your {num} character password is:\n `{''.join(passwd[0:(num)])}`", color=ctx.author.color)
+    emb.set_footer(
+        text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+    emb.timestamp
+    emb.timestamp = datetime.datetime.now()
+    await ctx.author.send(embed=emb)
 
 
 @bot.command()
 async def trig(ctx, *, member: nextcord.Member):
     url = f'https://some-random-api.ml/canvas/triggered?avatar={member.avatar.url}'
-    
+
     async with request("GET", url) as response:
         triggf = io.BytesIO(await response.read())
         file = nextcord.File(triggf, "trigger.gif")
-        emb = nextcord.Embed(title=f"Trigerred {member.name}", color = member.color)
+        emb = nextcord.Embed(
+            title=f"Trigerred {member.name}", color=member.color)
         emb.set_image(url="attachment://trigger.gif")
-        emb.set_footer(text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+        emb.set_footer(
+            text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
         emb.timestamp = datetime.datetime.now()
         await ctx.reply(embed=emb, file=file)
 
@@ -138,22 +145,24 @@ async def trig(ctx, *, member: nextcord.Member):
 async def amgsus(ctx, member: nextcord.Member):
     lst = ["true", "false"]
     if member.name == "":
-      random.choice(lst) == "true"
-      
+        random.choice(lst) == "true"
+
     url = f"https://some-random-api.ml/premium/amongus?avatar={member.avatar.url}&key=5rQWsDuewFB9s6HvXMU6USvEGthn2rzmBdt28KOB6dnOY9s9DUzDqftgijnGbGgt&username={member.name}&imposter={random.choice(lst)}"
-  
+
     if random.choice(lst) == "true":
-      tit = "We got the Imposter"
+        tit = "We got the Imposter"
     elif random.choice(lst) == "false":
-      tit = "Sadly we kicked the innocent one"
-      
+        tit = "Sadly we kicked the innocent one"
+
     async with request("GET", url) as response:
         amgs = io.BytesIO(await response.read())
         file = nextcord.File(amgs, "amgs.gif")
         emb = nextcord.Embed(title=tit, color=member.color)
         emb.set_image(url="attachment://amgs.gif")
-        emb.set_author(name="Among Sus", icon_url="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ad09b7110700277.5ff3fbebc5f27.gif")
-        emb.set_footer(text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+        emb.set_author(
+            name="Among Sus", icon_url="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ad09b7110700277.5ff3fbebc5f27.gif")
+        emb.set_footer(
+            text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
         emb.timestamp = datetime.datetime.now()
         await ctx.reply(embed=emb, file=file)
 
@@ -172,8 +181,10 @@ async def horny(ctx, *, member: nextcord.Member):
             emb = nextcord.Embed(
                 title=f"Horny License just for {member.name}", color=member.color)
             emb.set_image(url="attachment://horny.png")
-            emb.set_author(name="Horny", icon_url="https://discord.com/channels/943127717157675009/998642909345755326/1002977602614595594")
-            emb.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+            emb.set_author(
+                name="Horny", icon_url="https://discord.com/channels/943127717157675009/998642909345755326/1002977602614595594")
+            emb.set_footer(
+                text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
             emb.timestamp = datetime.datetime.now()
             await ctx.reply(embed=emb, file=file)
 
@@ -192,9 +203,9 @@ async def simp(ctx, *, member: nextcord.Member):
             emb = nextcord.Embed(
                 title=f"Simpcard for {member.name}", color=member.color)
             emb.set_image(url="attachment://simp.png")
-            emb.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
+            emb.set_footer(
+                text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar.url)
             await ctx.reply(embed=emb, file=file)
-          
 
 
 @bot.command()
@@ -213,7 +224,6 @@ async def info(ctx, *, member: nextcord.Member):
         role.mention for role in member.roles))
     emb.add_field(
         name="Status", value=f"Mobile: {member.mobile_status}\nDesktop: {member.desktop_status}\nWeb: {member.web_status}")
-    emb.add_field(name="Activity", value=member.system)
     emb.add_field(name="Top Role", value=member.top_role.mention)
     emb.set_thumbnail(url=member.avatar.url)
     emb.set_footer(
@@ -278,40 +288,6 @@ async def pokemon(ctx, *, message):
 
 #   emb = nextcord.Embed(title=msg.title(), description=wikipedia.summary(msg), color=nextcord.Color.random(), url=url)
 #   pass
-
-
-@bot.command()
-async def insta(ctx, *, message):
-    text = message.split()
-    x = "+".join(text)
-    url = f"https://api.popcat.xyz/instagram?user={x}"
-
-    async with request("GET", url) as response:
-        data = await response.json()
-        y = None
-        if data['private'] == True:
-            y = "This is a private account"
-        else:
-            y = "This person has a public account"
-
-        emb = nextcord.Embed(color=nextcord.Color.random())
-        emb.add_field(name="Username", value=f"{data['username']}")
-        emb.add_field(name="Full Name", value=f"{data['full_name']}")
-        emb.add_field(name="Bio", value=f"{data['biography']}")
-        emb.add_field(name="Posts", value=f"Total {data['posts']} posts")
-        emb.add_field(name="Reels", value=f"Total {data['reels']} Reels")
-        emb.add_field(name="Followers",
-                      value=f"{data['followers']} followers in total")
-        emb.add_field(name="Following",
-                      value=f"{data['following']} following in total")
-        emb.add_field(name="Accessibility", value=f"{y}")
-        emb.set_thumbnail(url=data['profile_pic'])
-        emb.set_author(name="Source: Instagram",
-                       icon_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLABq5ilMvXwQpYKIfPkgWCU5RPpDczu5h7A&usqp=CAU")
-        emb.set_footer(text="Powered by Tony",
-                       icon_url="https://1.bp.blogspot.com/-WolzwGw_bzU/Xg4MWh4sA7I/AAAAAAAAroA/jwKh4VOv-MIpmz1euxavbP-vshwwCRZQQCLcBGAsYHQ/s1600/101323_original.gif")
-        emb.timestamp = datetime.datetime.now()
-        await ctx.send(embed=emb)
 
 
 @bot.command()
@@ -428,24 +404,37 @@ async def say(ctx):
 
 
 @bot.command()
+async def agify(ctx, *, member):
+    url = f"https://api.agify.io/?name={member}"
+
+    async with request("GET", url) as response:
+        data = await response.json()
+        await ctx.send(f"{data['name']}'s age is {data['age']}")
+
+
+@bot.command()
+async def gen(ctx, *, member):
+    url = f"https://api.genderize.io?name={member}"
+
+    async with request("GET", url) as response:
+        data = await response.json()
+        await ctx.send(f"{data['name']} is a {data['gender']}. probabilty of being a {data['gender']} {data['probability']*100}%")
+
+
+@bot.command()
 async def ping(ctx):
     await ctx.send(f"Hey there! what's up\nHere is the current latency: {round(bot.latency * 1000)}ms")
 
 
-@bot.command(aliases=["Q"])
-async def _Q(ctx, *, question):
-    kid = "kidding"
-    responses = ["It is certain", "It is decidely so", "Without a doubt", "Yes - definately", "You may rely on it", "As I see it, yes",
-                 "Most likely", "Yes", "Signs point to yes", "Don't count on it", "My reply is no", "My sources say no", "Very doubtful", "I don't think so", "Definately not", "A big NO", "Not a chance", "Of course", "YESS", "Why not", "No way"]
+@bot.command(name="8ball")
+async def ball8(ctx, *, question):
+    text = question.split()
+    x = "%20".join(text)
+    url = f"https://8ball.delegator.com/magic/JSON/{x}"
 
-    afk = ["I don't know", "Who knows", "No comments",
-           "Does it really matter", "No, I am not a kid"]
-    # rage = ["Shut the fuck up", "Why do I tell you", "Not your business bro", "Who the fuck is this guy", f"Hey Strange. Calculate {ctx.author.name}'s chutiyarate right now", "Next Question plss"]
-
-    if kid in question:
-        await ctx.send(random.choice(afk))
-    else:
-        await ctx.send(f"{random.choice(responses)}")
+    async with request("GET", url) as response:
+        data = await response.json()
+        await ctx.send(data['magic']['answer'])
 
 
 @bot.command()
@@ -455,14 +444,6 @@ async def choose(ctx, *, message):
         await ctx.send(f"I will choose 👉 RASODA")
     else:
         await ctx.send(f"I will choose 👉 {random.choice(txt)}")
-
-
-@bot.command(name="8ball")
-async def ball8(ctx, *, message):
-    res = requests.get("https://api.popcat.xyz/8ball")
-    data = json.loads(res.text)
-
-    await ctx.send(data['answer'])
 
 
 @bot.command()
@@ -516,12 +497,6 @@ async def unban(ctx, *,  member):
 async def clear_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send("Please give a specific amount of message you want to clear")
-
-
-@_Q.error
-async def Q_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Please ask a question❓❓")
 
 
 @bot.event
