@@ -532,7 +532,7 @@ async def heck(ctx, *, member: nextcord.Member):
     await message.edit(content=f'''Injecting the {random.choice(virus)} virus into {member.mention}'s ass''')
     await asyncio.sleep(2)
 
-    await message.edit(content=f'''Virus injected. So much smell🤢🤮''', icon_url="https://tenor.com/view/dance-kid-club-gif-9152583.gif")
+    await message.edit(content=f'''Virus injected. So much smell🤢🤮''')
     await asyncio.sleep(2)
 
     await message.edit(content=f'''Setting up a pornhub account for {member.mention}👄..''')
