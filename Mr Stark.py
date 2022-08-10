@@ -410,7 +410,17 @@ async def agify(ctx, *, member):
     async with request("GET", url) as response:
         data = await response.json()
         await ctx.send(f"{data['name']}'s age is {data['age']}")
-
+        
+        
+@bot.command()
+async def emojify(ctx, *, message):
+    text = message.split()
+    txt = "+".join(text)
+    url = f"https://normal-api.tk/emojify?text={txt}"
+    
+    async with request("GET", url) as response:
+        data = await response.json()
+        await ctx.send(data['emojify'])
 
 @bot.command()
 async def gen(ctx, *, member):
