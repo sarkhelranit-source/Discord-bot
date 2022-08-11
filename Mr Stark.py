@@ -10,6 +10,7 @@ import random
 import datetime
 import math
 from aiohttp import request
+from operator import indexOf
 import requests
 import json
 from webserver import keep_alive
@@ -410,17 +411,48 @@ async def agify(ctx, *, member):
     async with request("GET", url) as response:
         data = await response.json()
         await ctx.send(f"{data['name']}'s age is {data['age']}")
+
+
+@bot.command()
+async def distract(ctx, member1: nextcord.Member, member2: nextcord.Member, member3: nextcord.Member):
+    url = f"https://vacefron.nl/api/distractedbf?boyfriend={member1.avatar.url}&woman={member2.avatar.url}&girlfriend={member3.avatar.url}"
+
+    async with request("GET", url) as response:
+        imgdata = io.BytesIO(await response.read())
+        file = nextcord.File(imgdata, "imgdata.png")
+
+        if ctx.author.name != "RASODA" and (member1.name == "RASODA" or member2.name == "RASODA" or member3.name == "RASODA"):
+            await ctx.reply("https://c.tenor.com/9ajZkvVxdS8AAAAM/akshay-kumar-rakh-teri-maa-ki-rakh.gif")
+        elif ctx.author.name != "RASODA" and (member1.name == "Wanda" or member2.name == "Wanda" or member3.name == "Wanda"):
+            await ctx.reply("https://c.tenor.com/kjaYAvyiLCEAAAAM/itni-choti-si-baat-pe-hugg-diye-mirzapur.gif")
+        else:
+            await ctx.send(file=file)
+            
+            
+@bot.command()
+async def yell(ctx, member1: nextcord.Member, member2: nextcord.Member):
+    url = f"https://vacefron.nl/api/womanyellingatcat?woman={member1.avatar.url}&cat={member2.avatar.url}"
+    
+    async with request("GET", url) as response:
+        imgdata = io.BytesIO(await response.read())
+        file = nextcord.File(imgdata, "imgdata.png")
         
-        
+        if member1.name == "RASODA" or member1.name == "Wanda" or member1.name == bot.user.name:
+            await ctx.reply("https://c.tenor.com/jLbcu4lgIyoAAAAM/bhool-bhulaiyaa-akshay-kumar-aditya.gif")
+        else:
+            await ctx.send(file=file)
+            
+
 @bot.command()
 async def emojify(ctx, *, message):
     text = message.split()
     txt = "+".join(text)
     url = f"https://normal-api.tk/emojify?text={txt}"
-    
+
     async with request("GET", url) as response:
         data = await response.json()
         await ctx.send(data['emojify'])
+
 
 @bot.command()
 async def gen(ctx, *, member):
