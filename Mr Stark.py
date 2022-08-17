@@ -5,12 +5,12 @@ import os
 import asyncio
 import io
 import string
+import openai
 import oneliners
 import random
 import datetime
 import math
 from aiohttp import request
-from operator import indexOf
 import requests
 import json
 from webserver import keep_alive
@@ -21,8 +21,58 @@ intents.typing = True
 intents.members = True
 intents.guilds = True
 
+api_key = os.environ.get("api_key")
+
 
 bot = commands.Bot(command_prefix=".", case_insensitive=True, intents=intents)
+
+
+@bot.command()
+async def prog(ctx, *, message):
+  txt = message.split()
+  x = " ".join(txt)
+  
+  prompt = f'''Convert this text to a programmatic command:
+
+  Example:{x}
+  Output:'''
+
+  response = openai.Completion.create(api_key=api_key, engine="text-davinci-002",  prompt=prompt, max_tokens=100)
+  await ctx.reply(f"```\n{response['choices'][0]['text'][2:]}\n```")
+  
+  
+@bot.command()
+async def speak(ctx, *, message):
+  txt = message.split()
+  x = " ".join(txt)
+  
+  prompt = f"""You:{x}
+  Friend:"""
+
+  response = openai.Completion.create(api_key=api_key, engine="text-davinci-002",  prompt=prompt, max_tokens=60)
+
+  res = response["choices"][0]["text"]
+
+  if res[0] == "\n" and res[1] == "\n":
+    await ctx.send(res[2:])
+  else:
+    await ctx.send(res)
+
+
+@bot.command()
+async def mte(ctx, *, message):
+  txt = message.split()
+  x = " ".join(txt)
+  
+  prompt = f"""Convert movie titles into emoji.
+
+  Back to the Future: 👨👴🚗🕒 
+  Batman: 🤵🦇 
+  Transformers: 🚗🤖
+  {x}:"""
+
+  response = openai.Completion.create(api_key=api_key, engine="text-davinci-002", prompt=prompt, max_tokens=60)
+  await ctx.send(response["choices"][0]["text"][1:])
 
 
 @bot.command()
@@ -37,6 +87,36 @@ async def wanted(ctx, member: nextcord.Member):
             await ctx.send("https://c.tenor.com/HWBMmc8g6p4AAAAM/fuck-fuck-you.gif")
         else:
             await ctx.send(file=welcimg)
+
+
+@bot.command()
+async def distract(ctx, member1: nextcord.Member, member2: nextcord.Member, member3: nextcord.Member):
+    url = f"https://vacefron.nl/api/distractedbf?boyfriend={member1.avatar.url}&woman={member2.avatar.url}&girlfriend={member3.avatar.url}"
+
+    async with request("GET", url) as response:
+        imgdata = io.BytesIO(await response.read())
+        file = nextcord.File(imgdata, "imgdata.png")
+
+        if ctx.author.name != "RASODA" and (member1.name == "RASODA" or member2.name == "RASODA" or member3.name == "RASODA"):
+            await ctx.reply("https://c.tenor.com/9ajZkvVxdS8AAAAM/akshay-kumar-rakh-teri-maa-ki-rakh.gif")
+        elif ctx.author.name != "RASODA" and (member1.name == "Wanda" or member2.name == "Wanda" or member3.name == "Wanda"):
+            await ctx.reply("https://c.tenor.com/kjaYAvyiLCEAAAAM/itni-choti-si-baat-pe-hugg-diye-mirzapur.gif")
+        else:
+            await ctx.send(file=file)
+
+
+@bot.command()
+async def yell(ctx, member1: nextcord.Member, member2: nextcord.Member):
+    url = f"https://vacefron.nl/api/womanyellingatcat?woman={member1.avatar.url}&cat={member2.avatar.url}"
+    
+    async with request("GET", url) as response:
+        imgdata = io.BytesIO(await response.read())
+        file = nextcord.File(imgdata, "imgdata.png")
+        
+        if member1.name == "RASODA" or member1.name == "Wanda" or member1.name == bot.user.name:
+            await ctx.reply("https://c.tenor.com/jLbcu4lgIyoAAAAM/bhool-bhulaiyaa-akshay-kumar-aditya.gif")
+        else:
+            await ctx.send(file=file)
 
 
 @bot.command()
@@ -145,20 +225,13 @@ async def trig(ctx, *, member: nextcord.Member):
 @bot.command()
 async def amgsus(ctx, member: nextcord.Member):
     lst = ["true", "false"]
-    if member.name == "":
-        random.choice(lst) == "true"
 
     url = f"https://some-random-api.ml/premium/amongus?avatar={member.avatar.url}&key=5rQWsDuewFB9s6HvXMU6USvEGthn2rzmBdt28KOB6dnOY9s9DUzDqftgijnGbGgt&username={member.name}&imposter={random.choice(lst)}"
-
-    if random.choice(lst) == "true":
-        tit = "We got the Imposter"
-    elif random.choice(lst) == "false":
-        tit = "Sadly we kicked the innocent one"
 
     async with request("GET", url) as response:
         amgs = io.BytesIO(await response.read())
         file = nextcord.File(amgs, "amgs.gif")
-        emb = nextcord.Embed(title=tit, color=member.color)
+        emb = nextcord.Embed(color=member.color)
         emb.set_image(url="attachment://amgs.gif")
         emb.set_author(
             name="Among Sus", icon_url="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ad09b7110700277.5ff3fbebc5f27.gif")
@@ -414,47 +487,6 @@ async def agify(ctx, *, member):
 
 
 @bot.command()
-async def distract(ctx, member1: nextcord.Member, member2: nextcord.Member, member3: nextcord.Member):
-    url = f"https://vacefron.nl/api/distractedbf?boyfriend={member1.avatar.url}&woman={member2.avatar.url}&girlfriend={member3.avatar.url}"
-
-    async with request("GET", url) as response:
-        imgdata = io.BytesIO(await response.read())
-        file = nextcord.File(imgdata, "imgdata.png")
-
-        if ctx.author.name != "RASODA" and (member1.name == "RASODA" or member2.name == "RASODA" or member3.name == "RASODA"):
-            await ctx.reply("https://c.tenor.com/9ajZkvVxdS8AAAAM/akshay-kumar-rakh-teri-maa-ki-rakh.gif")
-        elif ctx.author.name != "RASODA" and (member1.name == "Wanda" or member2.name == "Wanda" or member3.name == "Wanda"):
-            await ctx.reply("https://c.tenor.com/kjaYAvyiLCEAAAAM/itni-choti-si-baat-pe-hugg-diye-mirzapur.gif")
-        else:
-            await ctx.send(file=file)
-            
-            
-@bot.command()
-async def yell(ctx, member1: nextcord.Member, member2: nextcord.Member):
-    url = f"https://vacefron.nl/api/womanyellingatcat?woman={member1.avatar.url}&cat={member2.avatar.url}"
-    
-    async with request("GET", url) as response:
-        imgdata = io.BytesIO(await response.read())
-        file = nextcord.File(imgdata, "imgdata.png")
-        
-        if member1.name == "RASODA" or member1.name == "Wanda" or member1.name == bot.user.name:
-            await ctx.reply("https://c.tenor.com/jLbcu4lgIyoAAAAM/bhool-bhulaiyaa-akshay-kumar-aditya.gif")
-        else:
-            await ctx.send(file=file)
-            
-
-@bot.command()
-async def emojify(ctx, *, message):
-    text = message.split()
-    txt = "+".join(text)
-    url = f"https://normal-api.tk/emojify?text={txt}"
-
-    async with request("GET", url) as response:
-        data = await response.json()
-        await ctx.send(data['emojify'])
-
-
-@bot.command()
 async def gen(ctx, *, member):
     url = f"https://api.genderize.io?name={member}"
 
@@ -501,18 +533,6 @@ async def clear(ctx, amount: int):
         await ctx.send(f"{amount} messages got deleted")
     else:
         await ctx.send("DON'T ACT LIKE A DUMB😑")
-
-
-@bot.command()
-async def kick(ctx, member: nextcord.Member, *, reason="I don't know why I kicked... but his/her ass was looking so fleshy😐"):
-    if(ctx.author.name == "RASODA"):
-        await member.kick(reason=reason)
-        await ctx.send(f"kicked {member.mention}\nREASON: {reason}")
-    elif(ctx.author.name == "RASODA2.0"):
-        await member.kick(reason=reason)
-        await ctx.send(f"kicked {member.mention}\nREASON: {reason}")
-    else:
-        await ctx.send(f"Have you ever kicked a football {ctx.author.name}??")
 
 
 @bot.command()

@@ -1,4 +1,7 @@
 .env
 Wanda.py
 test.py
+api.py
+key.py
+/__pycache__
 *.txt
