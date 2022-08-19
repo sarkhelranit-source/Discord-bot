@@ -1,7 +1,7 @@
 # Discord-bot
 
 ## Mr. Stark
-This is a multipurpose bot made by me. It can tell jokes, oneliners, can show you song lyrics, can get info about a perticular instagram account and much more.
+This is a multipurpose bot made by me. It can tell jokes, oneliners, can show you song lyrics, can get info about a perticular movie and much more.
 If you want to add more features on it feel free to do it🙂🤗.
 
 ## Dr. Strange
